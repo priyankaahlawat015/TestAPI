@@ -1,0 +1,431 @@
+{
+	"info": {
+		"_postman_id": "e9a4c362-4912-4385-b212-60bfcd922d54",
+		"name": "Web API Boilerplate",
+		"description": "Postman collection for [https://github.com/kolappannathan/dotnet-web-api-boilerplate](https://github.com/kolappannathan/dotnet-web-api-boilerplate)\n\n*   Set the api-url collection variable to point to the correct URL\n*   Calling the login APIs will automatically update the bearer tokens",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11196299"
+	},
+	"item": [
+		{
+			"name": "Login Controller",
+			"item": [
+				{
+					"name": "Login as User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"auth-token\", jsonData.data);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"UserName\": \"Brandon Stark\",\n\t\"Password\": \"My direwolf is Summer\"\n}"
+						},
+						"url": {
+							"raw": "{{api-url}}login",
+							"host": [
+								"{{api-url}}login"
+							]
+						},
+						"description": "Sucessfully login as user"
+					},
+					"response": []
+				},
+				{
+					"name": "Login as Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.collectionVariables.set(\"auth-token\", jsonData.data);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"UserName\": \"Eddard Stark\",\n\t\"Password\": \"I'm the lord of WinterFell\"\n}"
+						},
+						"url": {
+							"raw": "{{api-url}}login",
+							"host": [
+								"{{api-url}}login"
+							]
+						},
+						"description": "Sucessfully login as Admin"
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid Credential",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"UserName\": \"Brandon Stark\",\n\t\"Password\": \"My direwolf is Lady\"\n}"
+						},
+						"url": {
+							"raw": "{{api-url}}login",
+							"host": [
+								"{{api-url}}login"
+							]
+						},
+						"description": "Failed login as credentials are invalid"
+					},
+					"response": []
+				},
+				{
+					"name": "Deleted account",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"UserName\": \"Brandon Stark\",\n\t\"Password\": \"Eddard's elder brother\"\n}"
+						},
+						"url": {
+							"raw": "{{api-url}}login",
+							"host": [
+								"{{api-url}}login"
+							]
+						},
+						"description": "Oops! This API has credentials for a deleted account"
+					},
+					"response": []
+				},
+				{
+					"name": "User 404",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"UserName\": \"Harry Potter\",\n\t\"Password\": \"I'm not in GOT\"\n}"
+						},
+						"url": {
+							"raw": "{{api-url}}login",
+							"host": [
+								"{{api-url}}login"
+							]
+						},
+						"description": "There is no such user!"
+					},
+					"response": []
+				},
+				{
+					"name": "Throw me an Exception",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"UserName\": \"No one\",\n\t\"Password\": \"A man wants an exception\"\n}"
+						},
+						"url": {
+							"raw": "{{api-url}}login",
+							"host": [
+								"{{api-url}}login"
+							]
+						},
+						"description": "A perfectly self thrown exeption."
+					},
+					"response": []
+				},
+				{
+					"name": "I want validation error",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"UserName\": null,\n\t\"Password\": \"A man wants an exception\"\n}"
+						},
+						"url": {
+							"raw": "{{api-url}}login",
+							"host": [
+								"{{api-url}}login"
+							]
+						},
+						"description": "A perfectly self thrown exeption."
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Values Controller",
+			"item": [
+				{
+					"name": "Values List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-url}}values",
+							"host": [
+								"{{api-url}}values"
+							]
+						},
+						"description": "A list of all values. Requires Authentication."
+					},
+					"response": []
+				},
+				{
+					"name": "Value Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-url}}values/0",
+							"host": [
+								"{{api-url}}values"
+							],
+							"path": [
+								"0"
+							]
+						},
+						"description": "A single value.  Requires Authentication."
+					},
+					"response": []
+				},
+				{
+					"name": "Value Detail NotFound",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-url}}values/10",
+							"host": [
+								"{{api-url}}values"
+							],
+							"path": [
+								"10"
+							]
+						},
+						"description": "Get detail for a value that is not there. Requires Authentication."
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\"Tyrion Lanister\""
+						},
+						"url": {
+							"raw": "{{api-url}}values",
+							"host": [
+								"{{api-url}}values"
+							]
+						},
+						"description": "API request for creating new value. Requires Admin auth."
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Save",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\"Tyrion Lanister\""
+						},
+						"url": {
+							"raw": "{{api-url}}values/1",
+							"host": [
+								"{{api-url}}values"
+							],
+							"path": [
+								"1"
+							]
+						},
+						"description": "API request for updating existing value. Requires Admin auth."
+					},
+					"response": []
+				},
+				{
+					"name": "Value Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-url}}values/1",
+							"host": [
+								"{{api-url}}values"
+							],
+							"path": [
+								"1"
+							]
+						},
+						"description": "A delete request to the value controller. Requires Admin auth."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{auth-token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api-url",
+			"value": "https://localhost:7030/api/"
+		},
+		{
+			"key": "auth-token",
+			"value": ""
+		}
+	]
+}
